@@ -1,14 +1,17 @@
-// import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
+import Loader from "../components/Loader";
 
 export default function Home() {
   const apiCrypto =
     "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&sparkline=false";
 
   const { data, loading, error } = useFetch(apiCrypto);
-  console.log(data);
+  const navigate = useNavigate();
+
+  // console.log(data);
   if (loading) {
-    return <p className="mt-4">Loading...</p>;
+    <Loader />;
   }
 
   if (error) {
@@ -18,9 +21,14 @@ export default function Home() {
   return (
     <div className="mt-4">
       <h2 className="text-xl font-bold">Top 50 cryptos</h2>
+      {/* grille espace de 4 1colonne 2colonnes pour ecran tablette 640px 3colonnes pour ecran > 1024px */}
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {data.map((crypto) => (
-          <div key={crypto.name} className="bg-gray-800 p-4 rounded-lg">
+          <div
+            key={crypto.id}
+            className="bg-gray-800 p-4 cursor-pointer"
+            onClick={() => navigate(`/coin/${crypto.id}`)}
+          >
             <div className="flex items-center gap-3">
               <img
                 src={crypto.image}

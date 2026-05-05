@@ -4,14 +4,14 @@ import Loader from "../components/Loader";
 
 export default function Home() {
   const apiCrypto =
-    "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&sparkline=false";
+    "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=1&sparkline=false";
 
   const { data, loading, error } = useFetch(apiCrypto);
   const navigate = useNavigate();
 
   // console.log(data);
   if (loading) {
-    <Loader />;
+    return <Loader />;
   }
 
   if (error) {
@@ -20,7 +20,7 @@ export default function Home() {
 
   return (
     <div className="mt-4">
-      <h2 className="text-xl font-bold">Top 50 cryptos</h2>
+      <h2 className="text-xl font-bold">Top 20 cryptos</h2>
       {/* grille espace de 4 1colonne 2colonnes pour ecran tablette 640px 3colonnes pour ecran > 1024px */}
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {data.map((crypto) => (
